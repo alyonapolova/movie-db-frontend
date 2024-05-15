@@ -1,21 +1,25 @@
-import './App.css'
-import {Counter} from "./features/counter/Counter.tsx";
-import {useEffect} from "react";
-import {getGenres, getSearch} from "./api";
+import './App.css';
+import { useEffect } from 'react';
+import { getGenres, getSearch } from './api';
+import { Route, Routes } from 'react-router-dom';
+import { RoutesList } from './config/routes.ts';
+import { SearchPage } from './pages/SearchPage.tsx';
+import { HomePage } from './pages/HomePage.tsx';
 
 function App() {
-    useEffect(() => {
-        getGenres().then(console.log);
-        getSearch('shrek').then(console.log);
-    }, []);
-
+  // useEffect(() => {
+  //   getGenres().then(console.log);
+  //   getSearch('shrek').then(console.log);
+  // }, []);
 
   return (
     <>
-        The Greatest App Probably
-        <Counter incrementValue={5} />
+      <Routes>
+        <Route path={RoutesList.search} element={<SearchPage />} />
+        <Route path={RoutesList.home} element={<HomePage />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

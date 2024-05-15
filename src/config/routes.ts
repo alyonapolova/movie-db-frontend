@@ -1,4 +1,4 @@
-export enum Routes {
+export enum RoutesList {
   home = '/',
   search = '/search',
 }
