@@ -20,7 +20,7 @@ export async function getGenres(): Promise<Genre[]> {
   const res = await axios.get<GenreResponse>('/genre/movie/list', {
     params: {
       api_key,
-      language: 'hu-HU',
+      language: 'en-EN',
     },
   });
 

@@ -24,7 +24,6 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -64,4 +63,77 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.genresList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.genreItem {
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 2px 5px;
+  background-color: antiquewhite;
+  cursor: pointer;
+
+  &:hover {
+    background-color: plum;
+  }
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: black;
+  width: 300px;
+  height: 50px;
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.submitBtn {
+  background-color: transparent;
+  color: black;
+}
+
+.input {
+  background-color: transparent;
+  color: black;
+}
+
+.clearBtn {
+  background-color: transparent;
+  color: black;
 }

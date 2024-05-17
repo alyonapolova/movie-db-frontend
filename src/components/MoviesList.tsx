@@ -17,15 +17,14 @@ export const MoviesList: React.FC<MoviesListProps> = ({ results }) => {
   const dispatch = useDispatch();
 
   const handleClick = (mov) => {
-    console.log(mov);
     dispatch(addToFav(mov));
   };
 
   return (
-    <ul>
+    <ul className="container">
       {results &&
         results.map((item) => (
-          <li key={item.id}>
+          <li className="item" key={item.id}>
             <img src={`${IMG_URL}/${item.poster_path}`} />
             <p>{item.title}</p>
             <button type="button" onClick={() => handleClick(item)}>

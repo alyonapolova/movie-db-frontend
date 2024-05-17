@@ -9,7 +9,15 @@ export const favMoviesSlice = createSlice({
   initialState,
   reducers: {
     addToFav(state, action) {
-      state.favMovies.push(action.payload);
+      const existingIndex = state.favMovies.findIndex(
+        (mov) => mov.id === action.payload.id
+      );
+
+      if (existingIndex === -1) {
+        state.favMovies.push(action.payload);
+      } else {
+        state.favMovies[existingIndex] = action.payload;
+      }
       localStorage.setItem('favMovies', JSON.stringify(state.favMovies));
     },
   },
