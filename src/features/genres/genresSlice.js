@@ -4,7 +4,7 @@ const initialState = {
   genresList: [],
 };
 
-export const genresSlice = createSlice({
+export const GenresSlice = createSlice({
   name: 'genresAction',
   initialState,
   reducers: {
@@ -14,4 +14,4 @@ export const genresSlice = createSlice({
   },
 });
 
-export const { getAllGenres } = genresSlice.actions;
+export const { getAllGenres } = GenresSlice.actions;

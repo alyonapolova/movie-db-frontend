@@ -1,17 +1,16 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { MoviesList } from '../components/MoviesList';
 import { Search } from '../components/Search';
-import { getSearch } from '../api';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../store';
+import { moviesSelector, pageSelector } from '../features/redux/selectors';
+import { fetchMoviesThunk } from '../features/redux/thunk.ts/fetchMoviesThunk';
 
 export const SearchPage = () => {
-  const [movies, setMovies] = useState([]);
+  const moviesList = useAppSelector(moviesSelector);
+  const page = useAppSelector(pageSelector);
   const [query, setQuery] = useState('');
-
-  const getData = async () => {
-    const data = await getSearch(query);
-    setMovies(data);
-  };
+  const dispatch = useAppDispatch();
 
   const onChangeQuery = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -19,13 +18,16 @@ export const SearchPage = () => {
 
   const clearQuery = () => {
     setQuery('');
-    setMovies([]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getData();
+    dispatch(fetchMoviesThunk({ query, page: 1 }));
   };
+
+  useEffect(() => {
+    dispatch(fetchMoviesThunk({ query, page }));
+  }, [page]);
 
   return (
     <div>
@@ -36,7 +38,7 @@ export const SearchPage = () => {
         clearQuery={clearQuery}
         handleSubmit={handleSubmit}
       />
-      <MoviesList {...movies} />
+      <MoviesList />
     </div>
   );
 };

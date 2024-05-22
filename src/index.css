@@ -102,11 +102,14 @@ img {
   border-radius: 5px;
   border: 1px solid black;
   padding: 2px 5px;
-  background-color: antiquewhite;
+  background-color: lightcoral;
   cursor: pointer;
+  border: none;
+  padding: 3px 8px;
 
   &:hover {
-    background-color: plum;
+    background-color: transparent;
+    color: black;
   }
 }
 

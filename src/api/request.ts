@@ -4,13 +4,18 @@ import { Genre, GenreResponse, SearchResult } from './interfaces.ts';
 
 axios.defaults.baseURL = base_url;
 
-export async function getSearch(text: string, page = 1): Promise<SearchResult> {
+export async function getSearch(
+  text: string,
+  page = 1,
+  perPage = 6
+): Promise<SearchResult> {
   const res = await axios.get<SearchResult>('/search/movie', {
     params: {
       api_key,
       region: 'hu',
       query: text,
       page,
+      perPage,
     },
   });
   return res.data;
