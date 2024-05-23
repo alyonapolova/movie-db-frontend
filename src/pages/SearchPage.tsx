@@ -30,7 +30,6 @@ export const SearchPage = () => {
 
   return (
     <div>
-      <Link to="/">Home Page</Link>
       <Search
         query={query}
         onChangeQuery={onChangeQuery}

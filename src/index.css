@@ -13,9 +13,10 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  font-weight: 700;
+  color: white;
   text-decoration: inherit;
+  box-sizing: border-box;
 }
 a:hover {
   color: #535bf2;
@@ -26,11 +27,22 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(45deg, #651fff, #00e5ff, #ff4081);
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+/* HEADER */
+
+header {
+  display: flex;
+  justify-content: space-around;
+  height: 61px;
+  width: 100vw;
+  padding-top: 40px;
 }
 
 button {
@@ -66,9 +78,9 @@ button:focus-visible {
 }
 
 .container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 60px;
 }
 
 .item {
@@ -77,8 +89,16 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid black;
-  padding: 10px;
+  padding: 20px 15px;
+  width: 430px;
+  height: 579px;
+  background-color: #000000;
+}
+
+.title {
+  color: white;
+  font-weight: 500;
+  font-size: medium;
 }
 
 ul {
@@ -89,6 +109,13 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+.movie-img {
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 382px;
+  height: 550px;
 }
 
 .genresList {
@@ -114,29 +141,38 @@ img {
 }
 
 .form {
+  position: relative;
+  width: 730px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  background-color: black;
-  width: 300px;
-  height: 50px;
-  background-color: transparent;
-  border: 1px solid black;
-  border-radius: 5px;
-}
-
-.submitBtn {
-  background-color: transparent;
-  color: black;
 }
 
 .input {
+  padding-left: 70px;
+  width: 730px;
+  height: 63px;
+  border-radius: 19px;
+  background-color: #303030;
+  color: white;
+  font-size: 30px;
+  border: none;
+  outline: none;
+}
+
+.submitBtn {
+  position: absolute;
+  left: -5px;
   background-color: transparent;
-  color: black;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 .clearBtn {
+  position: absolute;
+  right: 5px;
   background-color: transparent;
-  color: black;
+  color: white;
 }

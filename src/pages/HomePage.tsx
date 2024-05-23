@@ -23,7 +23,6 @@ export const HomePage = () => {
 
   return (
     <div>
-      <Link to="/search">Search</Link>
       <Search
         query={query}
         onChangeQuery={onChangeQuery}

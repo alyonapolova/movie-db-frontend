@@ -2,9 +2,6 @@ export const Search = ({ query, onChangeQuery, clearQuery, handleSubmit }) => {
   return (
     <>
       <form onSubmit={handleSubmit} className="form">
-        <button className="submitBtn" type="submit">
-          Search
-        </button>
         <input
           className="input"
           type="text"
@@ -12,6 +9,9 @@ export const Search = ({ query, onChangeQuery, clearQuery, handleSubmit }) => {
           onChange={onChangeQuery}
           value={query}
         />
+        <button className="submitBtn" type="submit">
+          &#128269;
+        </button>
         <button className="clearBtn" type="button" onClick={clearQuery}>
           X
         </button>

@@ -43,8 +43,14 @@ export const MoviesList = () => {
         {moviesList.length !== 0 ? (
           moviesList.map((item: IMoviesList) => (
             <li className="item" key={item.id}>
-              <img src={`${IMG_URL}/${item.poster_path}`} />
-              <p>{item.title}</p>
+              <div
+                className="movie-img"
+                style={{
+                  backgroundImage: `url(${IMG_URL}/${item.poster_path})`,
+                }}
+              ></div>
+
+              <p className="title">{item.title}</p>
               <button type="button" onClick={() => handleToggleClick(item)}>
                 {favMovies.length !== 0 &&
                 favMovies.some((mov: IMoviesList) => mov.id === item.id)
