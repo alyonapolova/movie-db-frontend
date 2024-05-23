@@ -10,8 +10,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { GenresSlice } from './features/genres/genresSlice';
 import { MoviesSlice } from './features/redux/slice';
+import { GenresSlice } from './features/genres/genresSlice';
 
 const persistConfig = {
   key: 'root',

@@ -1,4 +1,6 @@
-export const moviesSelector = (state) => state.movies.moviesList;
-export const favMoviesSelector = (state) => state.movies.favMovies;
-export const pageSelector = (state) => state.movies.page;
-export const totalPagesSelector = (state) => state.movies.totalPages;
+import { RootState } from '../../store';
+
+export const moviesSelector = (state: RootState) => state.movies.moviesList;
+export const favMoviesSelector = (state: RootState) => state.movies.favMovies;
+export const pageSelector = (state: RootState) => state.movies.page;
+export const totalPagesSelector = (state: RootState) => state.movies.totalPages;

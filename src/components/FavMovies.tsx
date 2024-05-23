@@ -1,14 +1,18 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store';
 import { getGenres } from '../api';
-import { getAllGenres } from '../features/genres/genresSlice';
-import { genresSelector } from '../features/genres/genresSelectors';
 import { removeFromFav } from '../features/redux/slice';
 import { favMoviesSelector } from '../features/redux/selectors';
+import { genresSelector } from '../features/genres/genresSelectors';
+import { getAllGenres } from '../features/genres/genresSlice';
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w300';
 
-export const FavMovies = ({ query }) => {
+interface IPropTypes {
+  query: string;
+}
+
+export const FavMovies: FC<IPropTypes> = ({ query }) => {
   const allGenresList = useAppSelector(genresSelector);
   const favMovies = useAppSelector(favMoviesSelector);
   const dispatch = useAppDispatch();

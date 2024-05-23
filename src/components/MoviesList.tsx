@@ -1,6 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../store';
-import { addToFav, removeFromFav, setPage } from '../features/redux/slice';
+import {
+  IMoviesList,
+  addToFav,
+  removeFromFav,
+  setPage,
+} from '../features/redux/slice';
 import {
   favMoviesSelector,
   moviesSelector,
@@ -10,26 +15,15 @@ import {
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w300';
 
-interface Movie {
-  id: number;
-  poster_path: string;
-  title: string;
-}
-
-interface MoviesListProps {
-  results: Movie[];
-}
-
-export const MoviesList: React.FC<MoviesListProps> = () => {
+export const MoviesList = () => {
   const dispatch = useDispatch();
   const favMovies = useAppSelector(favMoviesSelector);
   const moviesList = useAppSelector(moviesSelector);
   const page = useAppSelector(pageSelector);
   const totalPages = useAppSelector(totalPagesSelector);
 
-  const handleToggleClick = (mov) => {
-    const isInFav = favMovies.some((item) => item.id === mov.id);
-
+  const handleToggleClick = (mov: IMoviesList) => {
+    const isInFav = favMovies.some((item: IMoviesList) => item.id === mov.id);
     if (isInFav) {
       dispatch(removeFromFav(mov));
     } else {
@@ -37,7 +31,7 @@ export const MoviesList: React.FC<MoviesListProps> = () => {
     }
   };
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages) {
       dispatch(setPage(newPage));
     }
@@ -47,13 +41,13 @@ export const MoviesList: React.FC<MoviesListProps> = () => {
     <>
       <ul className="container">
         {moviesList.length !== 0 ? (
-          moviesList.map((item) => (
+          moviesList.map((item: IMoviesList) => (
             <li className="item" key={item.id}>
               <img src={`${IMG_URL}/${item.poster_path}`} />
               <p>{item.title}</p>
               <button type="button" onClick={() => handleToggleClick(item)}>
                 {favMovies.length !== 0 &&
-                favMovies.some((mov) => mov.id === item.id)
+                favMovies.some((mov: IMoviesList) => mov.id === item.id)
                   ? 'remove from fav'
                   : ' Add to fav'}
               </button>
@@ -64,7 +58,7 @@ export const MoviesList: React.FC<MoviesListProps> = () => {
         )}
       </ul>
 
-      {totalPages > 1 && (
+      {totalPages && totalPages > 1 && (
         <div className="pagination">
           <button
             type="button"

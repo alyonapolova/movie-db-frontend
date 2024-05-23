@@ -1,13 +1,12 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { MoviesList } from '../components/MoviesList';
 import { Search } from '../components/Search';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store';
-import { moviesSelector, pageSelector } from '../features/redux/selectors';
+import { pageSelector } from '../features/redux/selectors';
 import { fetchMoviesThunk } from '../features/redux/thunk.ts/fetchMoviesThunk';
 
 export const SearchPage = () => {
-  const moviesList = useAppSelector(moviesSelector);
   const page = useAppSelector(pageSelector);
   const [query, setQuery] = useState('');
   const dispatch = useAppDispatch();
@@ -20,7 +19,7 @@ export const SearchPage = () => {
     setQuery('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(fetchMoviesThunk({ query, page: 1 }));
   };

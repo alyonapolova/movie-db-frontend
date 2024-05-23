@@ -18,6 +18,11 @@ export async function getSearch(
       perPage,
     },
   });
+
+  if (res.data.results.length === 0) {
+    throw new Error('No data');
+  }
+
   return res.data;
 }
 
