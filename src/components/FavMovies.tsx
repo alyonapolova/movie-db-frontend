@@ -1,24 +1,18 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../store';
-import { Genre, getGenres } from '../api';
-import { IMoviesList, removeFromFav } from '../features/redux/slice';
+import { Genre, SearchResultItem, getGenres } from '../api';
+import { removeFromFav } from '../features/redux/slice';
 import { favMoviesSelector } from '../features/redux/selectors';
 import { genresSelector } from '../features/genres/genresSelectors';
 import { getAllGenres } from '../features/genres/genresSlice';
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w300';
 
-interface IPropTypes {
-  query: string;
-}
-
-export const FavMovies: FC<IPropTypes> = ({ query }) => {
+export const FavMovies = () => {
   const allGenresList = useAppSelector(genresSelector);
   const favMovies = useAppSelector(favMoviesSelector);
   const dispatch = useAppDispatch();
-  const [genresNames, setGenresNames] = useState<Genre[]>([]);
-  const [selectedGenreId, setSelectedGenreId] = useState<number | null>(null);
-  const [filteredFavMovies, setFilteredFavMovies] = useState<IMoviesList[]>([]);
+  const [selectedGenresIds, setSelectedGenresIds] = useState<number[]>([]);
 
   const fetchGenres = useCallback(async () => {
     const response = await getGenres();
@@ -29,60 +23,49 @@ export const FavMovies: FC<IPropTypes> = ({ query }) => {
     fetchGenres();
   }, [fetchGenres]);
 
-  const favGenres = useMemo<Set<number>>(() => {
-    const genreIdsArray: number[][] = favMovies.map((mov) => mov.genre_ids);
+  const handleGenreSearch = (id: number) => {
+    setSelectedGenresIds((prev) =>
+      prev.includes(id)
+        ? prev.filter((genreId) => genreId !== id)
+        : [...prev, id]
+    );
+  };
+
+  const filteredFavMovies = useMemo(() => {
+    let filteredMovies = [...favMovies];
+
+    if (selectedGenresIds.length >= 1) {
+      filteredMovies = filteredMovies.filter((item) =>
+        selectedGenresIds.every((id) => item.genre_ids.includes(id))
+      );
+    }
+
+    return filteredMovies;
+  }, [selectedGenresIds, favMovies]);
+
+  const favGenreIds = useMemo<Set<number>>(() => {
+    const genreIdsArray: number[][] = filteredFavMovies.map(
+      (mov) => mov.genre_ids
+    );
     const flattenedGenreIds: number[] = genreIdsArray.flat();
     const uniqGenresIds: Set<number> = new Set<number>(flattenedGenreIds);
     return uniqGenresIds;
-  }, [favMovies]);
+  }, [filteredFavMovies]);
 
-  useEffect(() => {
+  const favGenres = useMemo(() => {
     const nameArray = allGenresList.filter((genre: Genre) =>
-      favGenres.has(genre.id)
-    );
-    setGenresNames(nameArray);
-  }, [favGenres, allGenresList]);
-
-  const handleGenreSearch = (e: React.MouseEvent<HTMLElement>) => {
-    const genreId = Number(e.currentTarget.getAttribute('data-id'));
-    setSelectedGenreId(genreId);
-  };
-
-  const filterMoviesAndGenres = useCallback(() => {
-    let filteredMovies = favMovies;
-
-    if (selectedGenreId) {
-      filteredMovies = filteredMovies.filter((item) =>
-        item.genre_ids.includes(selectedGenreId)
-      );
-    }
-
-    if (query) {
-      filteredMovies = filteredMovies.filter((item) =>
-        item.title.toLowerCase().includes(query.toLowerCase().trim())
-      );
-    }
-
-    setFilteredFavMovies(filteredMovies);
-
-    const relevantGenres = allGenresList.filter((genre) =>
-      filteredMovies.some((movie) => movie.genre_ids.includes(genre.id))
+      favGenreIds.has(genre.id)
     );
 
-    setGenresNames(relevantGenres);
-  }, [favMovies, selectedGenreId, query, allGenresList]);
+    return nameArray;
+  }, [favGenreIds, allGenresList]);
 
-  useEffect(() => {
-    filterMoviesAndGenres();
-  }, [favMovies, selectedGenreId, query, filterMoviesAndGenres]);
-
-  const handleRemoveFromFav = (mov: IMoviesList) => {
+  const handleRemoveFromFav = (mov: SearchResultItem) => {
     dispatch(removeFromFav(mov));
   };
 
   const handleClearFilters = () => {
-    setSelectedGenreId(null);
-    setFilteredFavMovies(favMovies);
+    setSelectedGenresIds([]);
   };
 
   return (
@@ -93,15 +76,16 @@ export const FavMovies: FC<IPropTypes> = ({ query }) => {
         Clear Filters
       </button>
       <div className="genresList">
-        {genresNames.map((item: Genre) => (
+        {favGenres.map((item: Genre) => (
           <button
             type="button"
             className="genreItem"
             key={item.id}
             data-id={item.id}
-            onClick={handleGenreSearch}
+            onClick={() => handleGenreSearch(item.id)}
           >
             {item.name}
+            {selectedGenresIds.includes(item.id) ? '+' : '-'}
           </button>
         ))}
       </div>

@@ -1,26 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchMoviesThunk } from './thunk.ts/fetchMoviesThunk';
-
-export interface IMoviesList {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+import { SearchResultItem } from '../../api';
 
 interface MoviesState {
-  moviesList: IMoviesList[];
-  favMovies: IMoviesList[];
+  moviesList: SearchResultItem[];
+  favMovies: SearchResultItem[];
   page: number;
   totalPages: number | null;
   isLoading: boolean;
@@ -40,7 +24,7 @@ export const MoviesSlice = createSlice({
   name: 'favoriteMovies',
   initialState,
   reducers: {
-    addToFav(state, action: PayloadAction<IMoviesList>) {
+    addToFav(state, action: PayloadAction<SearchResultItem>) {
       const existingIndex = state.favMovies.findIndex(
         (mov) => mov.id === action.payload.id
       );
@@ -65,23 +49,10 @@ export const MoviesSlice = createSlice({
       .addCase(fetchMoviesThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(
-        fetchMoviesThunk.fulfilled,
-        (
-          state,
-          action: PayloadAction<{ results: IMoviesList[]; total_pages: number }>
-        ) => {
-          state.moviesList = action.payload.results;
-          state.totalPages = action.payload.total_pages;
-        }
-      )
-      .addCase(
-        fetchMoviesThunk.rejected,
-        (state, action: PayloadAction<string | undefined>) => {
-          state.isLoading = false;
-          state.error = action.payload ?? 'An unknown error occurred';
-        }
-      );
+      .addCase(fetchMoviesThunk.fulfilled, (state, action) => {
+        state.moviesList = action.payload.results;
+        state.totalPages = action.payload.total_pages;
+      });
   },
 });
 

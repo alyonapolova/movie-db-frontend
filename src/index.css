@@ -78,8 +78,8 @@ button:focus-visible {
 }
 
 .container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px 60px;
 }
 
@@ -90,7 +90,6 @@ button:focus-visible {
   justify-content: center;
   border-radius: 8px;
   padding: 20px 15px;
-  width: 430px;
   height: 579px;
   background-color: #000000;
 }

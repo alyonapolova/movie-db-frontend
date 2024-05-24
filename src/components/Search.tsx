@@ -1,4 +1,18 @@
-export const Search = ({ query, onChangeQuery, clearQuery, handleSubmit }) => {
+import { ChangeEvent, FC, FormEvent } from 'react';
+
+interface ISearchProps {
+  query: string;
+  onChangeQuery(e: ChangeEvent<HTMLInputElement>): void;
+  clearQuery(): void;
+  handleSubmit(e: FormEvent): void;
+}
+
+export const Search: FC<ISearchProps> = ({
+  query,
+  onChangeQuery,
+  clearQuery,
+  handleSubmit,
+}) => {
   return (
     <>
       <form onSubmit={handleSubmit} className="form">

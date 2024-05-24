@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { MoviesList } from '../components/MoviesList';
 import { Search } from '../components/Search';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store';
 import { pageSelector } from '../features/redux/selectors';
 import { fetchMoviesThunk } from '../features/redux/thunk.ts/fetchMoviesThunk';
