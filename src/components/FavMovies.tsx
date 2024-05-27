@@ -72,9 +72,7 @@ export const FavMovies = () => {
     <div>
       <h2>Your library</h2>
       <h3>Filter by genre</h3>
-      <button type="button" onClick={handleClearFilters}>
-        Clear Filters
-      </button>
+
       <div className="genresList">
         {favGenres.map((item: Genre) => (
           <button
@@ -88,6 +86,9 @@ export const FavMovies = () => {
             {selectedGenresIds.includes(item.id) ? '+' : '-'}
           </button>
         ))}
+        <button type="button" onClick={handleClearFilters}>
+          Clear Filters
+        </button>
       </div>
       <ul className="container">
         {filteredFavMovies.map((item) => (

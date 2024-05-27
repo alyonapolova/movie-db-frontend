@@ -63,13 +63,14 @@ export const Paginator = () => {
   }, [page, totalPages]);
 
   return (
-    <div>
-      <button onClick={onPrev} aria-label="previous">
+    <div className="paginator">
+      <button onClick={onPrev} aria-label="previous" className="paginator-btn">
         {'<'}
       </button>
       <div>
         {items.map((item, index) => (
           <button
+            className="paginator-btn"
             key={index}
             onClick={() => select(item)}
             aria-label={`page ${item}`}
@@ -79,7 +80,7 @@ export const Paginator = () => {
           </button>
         ))}
       </div>
-      <button onClick={onNext} aria-label="next">
+      <button onClick={onNext} aria-label="next" className="paginator-btn">
         {'>'}
       </button>
     </div>
